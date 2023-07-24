@@ -21,7 +21,7 @@ module "vpc" {
 ## Droplet module call
 ##------------------------------------------------
 module "droplet" {
-  source      = "./../../../terraform-digitalocean-droplet"
+  source      = "git::https://github.com/terraform-do-modules/terraform-digitalocean-droplet.git?ref=internal-425"
   name        = local.name
   environment = local.environment
   region      = local.region
