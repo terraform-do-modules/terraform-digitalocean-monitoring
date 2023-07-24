@@ -25,7 +25,6 @@ badges:
 #  description of this project
 description: |-
   Terraform module to create Digitalocean monitoring service resource on Digitalocean.
-
 # extra content
 include:
   - "terraform.md"
