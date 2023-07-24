@@ -5,36 +5,84 @@
 #
 
 # Name of this project
-name : Terraform Module Template
+name : Terraform DigitalOcean Monitoring
 
 # License of this project
 license: "APACHE"
 
 # Canonical GitHub repo
-github_repo: clouddrove/terraform-module-template
+github_repo: terraform-do-modules/terraform-digitalocean-monitoring
 
 # Badges to display
 badges:
-  - name: "Latest Release"
-    image: "https://img.shields.io/github/release/clouddrove/terraform-module-template.svg"
-    url: "https://github.com/clouddrove/terraform-module-template/releases/latest"
-  - name: "tfsec"
-    image: "https://github.com/clouddrove/terraform-module-template/actions/workflows/tfsec.yml/badge.svg"
-    url: ""
+  - name: "Terraform"
+    image: "https://img.shields.io/badge/Terraform-v0.15-green"
+    url: "https://www.terraform.io"
   - name: "Licence"
     image: "https://img.shields.io/badge/License-APACHE-blue.svg"
     url: "LICENSE.md"
 
 #  description of this project
 description: |-
-  Terraform module template to create new modules using this as baseline
+  Terraform module to create Digitalocean monitoring service resource on Digitalocean.
+
 # extra content
 include:
   - "terraform.md"
 
 # How to use this project
-# How to use this project
-usage: |-
-  Here are some examples of how you can use this module in your inventory structure:
+usage : |-
+  Here are examples of how you can use this module in your inventory structure:
+  ### resource  alert
   ```hcl
-    ```
+      module "resource-alert" {
+      source             = "terraform-do-modules/Monitoring/digitalocean"
+      version            = "0.15.0"
+      name               = "app"
+      environment        = "test"
+      resource_alerts = {
+        "alert1" = {
+          alerts = [
+            {
+              email = ["example@gmail.com"]
+              slack = [{
+                channel = "testing"
+                url     = "https://hooks.slack.com/services/TEXXXXXXXXxxxxYTGH8DNkjgggyKipj"
+              }]
+            }
+          ]
+          window      = "5m"
+          type        = "v1/insights/droplet/cpu"
+          compare     = "GreaterThan"
+          value       = 95
+          enabled     = true
+          entities    = [module.droplet.id[0]]
+          description = "Alert about CPU usage"
+          tags        = ["test"]
+        },
+      }
+    }
+  ```
+  ### uptime alert
+  ```hcl
+      module "uptime-alert" {
+      source                   = "terraform-do-modules/load-balancer/digitalocean"
+      version                  = "0.15.0"
+      name                     = "app"
+      environment              = "test"
+      uptime_alerts            = true
+      target_url               = "http://test.do.clouddrove.ca/"
+      type                     = "http"
+
+      ####
+      notifications = [
+        {
+          email = ["example@gmail.com"]
+          slack = [{
+            channel = "testing"
+            url     = "https://hooks.slack.com/services/TEXXXXXXXXxxxxYTGH8DNkjgggyKipj"
+          }]
+        }
+      ]
+    }
+  ```
