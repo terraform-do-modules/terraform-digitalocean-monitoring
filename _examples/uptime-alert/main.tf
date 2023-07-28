@@ -1,6 +1,5 @@
 provider "digitalocean" {}
 
-
 ##------------------------------------------------
 ## alert module call.
 ##------------------------------------------------
@@ -11,15 +10,16 @@ module "uptime-alert" {
   uptime_alerts = true
   target_url    = "http://test.do.clouddrove.ca/"
   type          = "http"
-
   ####
   notifications = [
     {
       email = ["example@gmail.com"]
-      slack = [{
-        channel = "testing"
-        url     = "https://hooks.slack.com/services/TEXXXXXXXXxxxxYTGH8DNkjgggyKipj"
-      }]
+      slack = [
+        {
+          channel = "testing"
+          url     = "https://hooks.slack.com/services/TEXXXXXXXXxxxxYTGH8DNkjgggyKipj"
+        }
+      ]
     }
   ]
 }

@@ -10,7 +10,8 @@ locals {
 ## VPC module call
 ##------------------------------------------------
 module "vpc" {
-  source      = "git::https://github.com/terraform-do-modules/terraform-digitalocean-vpc.git?ref=internal-423"
+  source      = "terraform-do-modules/vpc/digitalocean"
+  version     = "1.0.0"
   name        = local.name
   environment = local.environment
   region      = local.region
@@ -21,7 +22,8 @@ module "vpc" {
 ## Droplet module call
 ##------------------------------------------------
 module "droplet" {
-  source      = "git::https://github.com/terraform-do-modules/terraform-digitalocean-droplet.git?ref=internal-425"
+  source      = "terraform-do-modules/droplet/digitalocean"
+  version     = "1.0.0"
   name        = local.name
   environment = local.environment
   region      = local.region
@@ -53,10 +55,12 @@ module "resource-alert" {
       alerts = [
         {
           email = ["example@gmail.com"]
-          slack = [{
-            channel = "testing"
-            url     = "https://hooks.slack.com/services/TEXXXXXXXXxxxxYTGH8DNkjgggyKipj"
-          }]
+          slack = [
+            {
+              channel = "testing"
+              url     = "https://hooks.slack.com/services/TEXXXXXXXXxxxxYTGH8DNkjgggyKipj"
+            }
+          ]
         }
       ]
       window      = "5m"
