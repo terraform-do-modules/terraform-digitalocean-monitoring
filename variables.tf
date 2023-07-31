@@ -25,14 +25,14 @@ variable "managedby" {
 }
 
 variable "target_url" {
-  type        = string
-  default     = ""
+  type        = list(any)
+  default     = []
   description = "The endpoint to perform healthchecks on."
 }
 
 variable "type" {
-  type        = string
-  default     = ""
+  type        = list(string)
+  default     = []
   description = "The type of health check to perform: 'ping' 'http' 'https'."
 }
 variable "regions" {
@@ -54,26 +54,26 @@ variable "enabled" {
 }
 
 variable "alert_type" {
-  type        = string
-  default     = "down_global"
+  type        = list(any)
+  default     = ["down_global"]
   description = "The type of health check to perform. Must be one of latency, down, down_global or ssl_expiry."
 }
 
 variable "threshold" {
-  type        = number
-  default     = 1
+  type        = list(any)
+  default     = [1]
   description = "The threshold at which the alert will enter a trigger state. The specific threshold is dependent on the alert type."
 }
 
 variable "comparison" {
-  type        = string
-  default     = "less_than"
+  type        = list(any)
+  default     = ["less_than"]
   description = "The comparison operator used against the alert's threshold. Must be one of greater_than or less_than."
 }
 
 variable "period" {
-  type        = string
-  default     = "2m"
+  type        = list(string)
+  default     = ["2m"]
   description = "Period of time the threshold must be exceeded to trigger the alert. Must be one of 2m, 3m, 5m, 10m, 15m, 30m or 1h."
 }
 
@@ -86,8 +86,4 @@ variable "notifications" {
 variable "resource_alerts" {
   type    = map(any)
   default = {}
-}
-variable "uptime_alerts" {
-  type    = bool
-  default = false
 }

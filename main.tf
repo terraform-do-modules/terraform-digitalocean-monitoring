@@ -14,25 +14,25 @@ module "labels" {
 ##Description : Uptime Checks provide the ability to monitor your endpoints from around the world
 #################################################################################################
 resource "digitalocean_uptime_check" "main" {
-  count   = var.enabled && var.uptime_alerts ? 1 : 0
-  name    = format("%s-uptime-check", module.labels.id)
-  target  = var.target_url
-  type    = var.type
+  count   = var.enable ? length(var.target_url) : 0
+  name    = format("%s-uptime-check-%s", module.labels.id, count.index)
+  target  = element(var.target_url, count.index)
+  type    = element(var.type, count.index)
   regions = var.regions
-  enabled = var.enable
+  enabled = var.enabled
 }
 
 ################################################################################################################################################################################
 ##Description : Uptime Alerts provide the ability to add alerts to your DigitalOcean Uptime Checks when your endpoints are slow, unavailable, or SSL certificates are expiring.
 ################################################################################################################################################################################
 resource "digitalocean_uptime_alert" "main" {
-  count      = var.enabled && var.uptime_alerts ? 1 : 0
+  count      = var.enable ? length(var.target_url) : 0
   name       = format("%s-alert", module.labels.id)
-  check_id   = join("", digitalocean_uptime_check.main[*].id)
-  type       = var.alert_type
-  threshold  = var.threshold
-  comparison = var.comparison
-  period     = var.period
+  check_id   = element(concat(digitalocean_uptime_check.main[*].id, [""]), count.index)
+  type       = element(var.alert_type, count.index)
+  threshold  = element(var.threshold, count.index)
+  comparison = element(var.comparison, count.index)
+  period     = element(var.period, count.index)
 
   dynamic "notifications" {
     for_each = try(jsondecode(var.notifications), var.notifications) ##var.notifications == [] ? 0 : 1

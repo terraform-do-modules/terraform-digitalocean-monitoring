@@ -2,5 +2,5 @@
 # Outputs
 # ------------------------------------------------------------------------------
 output "id" {
-  value = module.uptime-alert.uptime_check_id
+  value = module.uptime-alert
 }

@@ -2,7 +2,7 @@
 # Outputs
 # ------------------------------------------------------------------------------
 output "uptime_check_id" {
-  value       = join("", digitalocean_uptime_check.main[*].id)
+  value       = element(concat(digitalocean_uptime_check.main[*].id[*], [""]), 0) ##digitalocean_uptime_check.main[*].id[*]
   description = " The id of the check."
 }
 output "uptime_alert_id" {
