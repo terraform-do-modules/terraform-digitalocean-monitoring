@@ -7,6 +7,6 @@ jobs:
   tfsec:
     uses: clouddrove/github-shared-workflows/.github/workflows/tfsec.yml@master
     secrets:
-      GITHUB: ${{ secrets.GITHUB }}
+      GITHUB: ${{ secrets.GITHUB_TOKEN }}
     with:
       working_directory: '.'
