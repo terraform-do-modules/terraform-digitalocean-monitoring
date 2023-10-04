@@ -1,11 +1,11 @@
 name: tfsec
 permissions: write-all
 on:
-  pull_request_target:
+  pull_request:
   workflow_dispatch:
 jobs:
   tfsec:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tfsec.yml@master
+    uses: clouddrove/github-shared-workflows/.github/workflows/tfsec.yml@1.0.6
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
     with:
