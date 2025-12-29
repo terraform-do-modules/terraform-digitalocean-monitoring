@@ -5,22 +5,15 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
-  resource-alerts-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
+  tf-checks-resource-alerts-example:
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/resource-alerts/'
-  uptime-alerts-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
+  tf-checks-uptime-alerts-example:
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/uptime-alerts/'
-  basic-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
+  tf-checks-basic-example:
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/basic/'
-
-# Seperate Job for TFlint workflow call
-  tf-lint:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@master
-    secrets:
-      GITHUB: ${{ secrets.GITHUB }}
-
