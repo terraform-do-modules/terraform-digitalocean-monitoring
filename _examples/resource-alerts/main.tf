@@ -23,13 +23,18 @@ module "vpc" {
 ##------------------------------------------------
 module "droplet" {
   source      = "terraform-do-modules/droplet/digitalocean"
-  version     = "1.0.0"
+  version     = "1.0.1"
   name        = local.name
   environment = local.environment
   region      = local.region
   vpc_uuid    = module.vpc.id
+  ssh_keys = {
+    key1 = {
+      name       = "my-ssh-key"
+      public_key = "ssh-rsa AAAAB3NzaC1yc2E"
+    }
+  }
 
-  ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg"
   ####firewall
   inbound_rules = [
     {
