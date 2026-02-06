@@ -78,7 +78,7 @@ variable "period" {
 }
 
 variable "notifications" {
-  type        = list(any)
+  type        = any
   default     = []
   description = "The notification settings for a trigger alert."
 }
