@@ -8,7 +8,7 @@ output "uptime_alert_id" {
   description = "ID of uptime alert"
 }
 
-output "resource_alert_id" {
-  value       = module.resource-alert.resource_alert_id
-  description = "ID of resource alert"
+output "resource_alert_uuid" {
+  value       = module.resource-alert.uuid
+  description = "UUID of resource alert"
 }
