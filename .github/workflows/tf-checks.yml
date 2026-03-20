@@ -6,13 +6,13 @@ on:
   workflow_dispatch:
 jobs:
   basic-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@f6cad30db3bfad5fc248a08ab65ac82eb8dbcb82 # pinned to latest
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
     with:
       provider: none
       working_directory: './_examples/basic/'
       provider: none
   complete-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@f6cad30db3bfad5fc248a08ab65ac82eb8dbcb82 # pinned to latest
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
     with:
       provider: none
       working_directory: './_examples/complete/'
@@ -20,6 +20,6 @@ jobs:
 
 # Separate job for TFlint workflow call
   tf-lint:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@1c43f71cb95be532a4ee848596eb73953dde517c # pinned to latest
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@master
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
