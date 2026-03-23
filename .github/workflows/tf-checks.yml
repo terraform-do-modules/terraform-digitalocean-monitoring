@@ -22,6 +22,6 @@ jobs:
 # Separate job for TFlint workflow call
   tf-lint:
     if: github.actor != 'dependabot[bot]'
-    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@v2
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@v2
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
