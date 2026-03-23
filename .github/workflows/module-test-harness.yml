@@ -2,19 +2,20 @@ name: Module Test Harness
 
 on:
   pull_request:
-    branches: [master]
 
 permissions:
   contents: read
 
 jobs:
   basic-example:
+    if: github.actor != 'dependabot[bot]'
     uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@v2
     with:
       provider: digitalocean
       working_directory: ./_examples/basic/
 
   complete-example:
+    if: github.actor != 'dependabot[bot]'
     uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@v2
     with:
       provider: digitalocean
