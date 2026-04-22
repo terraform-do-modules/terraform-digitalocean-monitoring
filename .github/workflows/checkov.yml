@@ -2,12 +2,14 @@ name: Security Scan
 
 on:
   pull_request:
-    branches: [master]
-    types: [opened, synchronize]
+    types:
+      - opened
+      - synchronize
 
 jobs:
   checkov:
-    uses: clouddrove/github-shared-workflows/.github/workflows/checkov.yml@61a4d250f08b1e4dd29c61bb8a73eaf9dd0f2a8f # pinned to latest
+    if: github.actor != 'dependabot[bot]'
+    uses: clouddrove/github-shared-workflows/.github/workflows/security-checkov.yml@v2
     with:
       directory: '.'
       continue_on_error: 'true'
