@@ -1,13 +1,6 @@
-##Description : This Script is used to create VPC.
-#Module      : LABEL
-#Description : Terraform label module variables.
-module "labels" {
-  source      = "terraform-do-modules/labels/digitalocean"
-  version     = "1.0.6"
-  name        = var.name
-  environment = var.environment
-  managedby   = var.managedby
-  label_order = var.label_order
+locals {
+  # Use a stable non-empty prefix even when tests run with default empty vars.
+  label_id = length(compact([var.name, var.environment])) > 0 ? join("-", compact([var.name, var.environment])) : "monitoring"
 }
 
 #################################################################################################
@@ -15,7 +8,7 @@ module "labels" {
 #################################################################################################
 resource "digitalocean_uptime_check" "main" {
   count   = var.enable ? length(var.target_url) : 0
-  name    = format("%s-uptime-check-%s", module.labels.id, count.index)
+  name    = format("%s-uptime-check-%s", local.label_id, count.index)
   target  = element(var.target_url, count.index)
   type    = element(var.type, count.index)
   regions = var.regions
@@ -27,7 +20,7 @@ resource "digitalocean_uptime_check" "main" {
 ################################################################################################################################################################################
 resource "digitalocean_uptime_alert" "main" {
   count      = var.enable ? length(var.target_url) : 0
-  name       = format("%s-alert", module.labels.id)
+  name       = format("%s-alert", local.label_id)
   check_id   = element(concat(digitalocean_uptime_check.main[*].id, [""]), count.index)
   type       = element(var.alert_type, count.index)
   threshold  = element(var.threshold, count.index)
