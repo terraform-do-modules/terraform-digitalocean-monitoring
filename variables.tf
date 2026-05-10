@@ -86,4 +86,5 @@ variable "notifications" {
 variable "resource_alerts" {
   type    = map(any)
   default = {}
+  description = "Map of per-resource alert configuration objects."
 }
