@@ -50,7 +50,7 @@ variable "enable" {
 variable "enabled" {
   type        = bool
   default     = true
-  description = "A boolean value indicating whether the check is enabled/disabled."
+  description = "Input value for `enabled` used by this module."
 }
 
 variable "alert_type" {
@@ -86,4 +86,5 @@ variable "notifications" {
 variable "resource_alerts" {
   type    = map(any)
   default = {}
+  description = "Map of per-resource alert configuration objects."
 }

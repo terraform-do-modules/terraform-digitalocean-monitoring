@@ -1,6 +1,17 @@
 locals {
+  label_context = {
+    name        = var.name
+    environment = var.environment
+    managedby   = var.managedby
+  }
+
+  ordered_label_values = [
+    for key in var.label_order : lookup(local.label_context, key, "")
+    if lookup(local.label_context, key, "") != ""
+  ]
+
   # Use a stable non-empty prefix even when tests run with default empty vars.
-  label_id = length(compact([var.name, var.environment])) > 0 ? join("-", compact([var.name, var.environment])) : "monitoring"
+  label_id = length(local.ordered_label_values) > 0 ? join("-", local.ordered_label_values) : "monitoring"
 }
 
 #################################################################################################
@@ -67,5 +78,8 @@ resource "digitalocean_monitor_alert" "cpu_alert" {
   entities    = lookup(each.value, "entities", null)
   value       = lookup(each.value, "value", 95)
   window      = lookup(each.value, "window", "5m")
-  tags        = lookup(each.value, "tags", null)
+  tags = distinct(compact(concat(
+    try(tolist(lookup(each.value, "tags", [])), []),
+    [format("managedby:%s", var.managedby)]
+  )))
 }
